@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Image Tools Online - Compress, Resize, Convert Images | Image Tools</title>
+    <meta name="description" content="Free online image tools. Compress, resize, and convert images directly in your browser. No upload, no sign-up, 100% private. Supports JPEG, PNG, WebP.">
+    <meta name="keywords" content="compress image, resize image, convert image, image compressor, image resizer, png to jpg, jpg to png, webp converter, free image tools">
+    <link rel="canonical" href="https://austinkc91.github.io/image-tools/">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Free Image Tools Online - Compress, Resize, Convert Images">
+    <meta property="og:description" content="Free online image tools. Compress, resize, and convert images in your browser. No upload, no sign-up, 100% private.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://austinkc91.github.io/image-tools/">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image Tools",
+        "url": "https://austinkc91.github.io/image-tools/",
+        "description": "Free online image tools to compress, resize, and convert images in your browser",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "featureList": ["Compress Images", "Resize Images", "Convert Image Formats", "No sign-up required", "100% browser-based", "Privacy-first"]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is this image tool really free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, completely free. No sign-up, no watermarks, no limits. All processing happens in your browser."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Are my images uploaded to a server?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. All image processing happens locally in your browser using the Canvas API. Your files never leave your device."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What image formats are supported?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "We support JPEG, PNG, WebP, GIF, BMP, and TIFF. You can convert between any of these formats and compress or resize them."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How much can images be compressed?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Typical compression reduces file size by 40-80% depending on the image and quality setting. You can adjust the quality slider to balance size vs quality."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I resize multiple images at once?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! You can drag and drop or select multiple images. All tools support batch processing with a single click."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- GoatCounter -->
+    <script data-goatcounter="https://textforge-tools.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #dbeafe;
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface2: #242837;
+            --text: #e8e8e8;
+            --text-muted: #9ca3af;
+            --border: #2d3140;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+        /* Header */
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+        }
+        header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .logo span { color: var(--text); }
+        header nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        header nav a:hover { color: var(--text); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 50px 0 30px;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        .hero h1 .accent { color: var(--primary); }
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 8px;
+        }
+        .privacy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        /* Tool Tabs */
+        .tool-tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tool-tab {
+            padding: 12px 28px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .tool-tab:hover { border-color: var(--primary); color: var(--text); }
+        .tool-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Tool Panel */
+        .tool-panel { display: none; }
+        .tool-panel.active { display: block; }
+
+        /* Drop Zone */
+        .drop-zone {
+            border: 2px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 50px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--surface);
+            margin-bottom: 20px;
+        }
+        .drop-zone:hover, .drop-zone.dragover {
+            border-color: var(--primary);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .drop-zone .icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .drop-zone p { color: var(--text-muted); margin-bottom: 4px; }
+        .drop-zone .formats { font-size: 0.8rem; color: var(--text-muted); opacity: 0.7; }
+
+        /* Settings */
+        .settings {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        .settings h3 { margin-bottom: 16px; font-size: 1rem; }
+        .setting-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+        }
+        .setting-row:last-child { margin-bottom: 0; }
+        .setting-row label {
+            min-width: 120px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .setting-row input[type="range"] {
+            flex: 1;
+            accent-color: var(--primary);
+        }
+        .setting-row .value {
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .setting-row select, .setting-row input[type="number"] {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            padding: 8px 12px;
+            font-size: 0.9rem;
+        }
+        .setting-row input[type="number"] { width: 100px; }
+        .setting-row select { min-width: 140px; }
+
+        .radio-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .radio-btn {
+            padding: 6px 14px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .radio-btn:hover { border-color: var(--primary); }
+        .radio-btn.active {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* File List */
+        .file-list { margin-bottom: 20px; }
+        .file-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            margin-bottom: 8px;
+        }
+        .file-thumb {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: var(--surface2);
+        }
+        .file-info { flex: 1; min-width: 0; }
+        .file-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .file-meta {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .file-result {
+            text-align: right;
+            min-width: 100px;
+        }
+        .file-result .saved {
+            font-size: 0.8rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+        .file-result .new-size {
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        .file-remove:hover { color: var(--danger); }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-secondary {
+            background: var(--surface2);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover { border-color: var(--primary); }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Progress */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--surface2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 8px;
+            display: none;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.3s;
+            width: 0%;
+        }
+
+        /* Summary */
+        .summary {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+        .summary .stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        .summary .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+        .summary .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Social Media Presets */
+        .presets {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .preset {
+            padding: 4px 10px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+        .preset:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--primary); }
+        .footer-copy {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 30px 0;
+        }
+        .feature {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+        }
+        .feature .icon { font-size: 2rem; margin-bottom: 10px; }
+        .feature h3 { font-size: 1rem; margin-bottom: 6px; }
+        .feature p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            .features { grid-template-columns: 1fr; }
+            .tool-tabs { gap: 4px; }
+            .tool-tab { padding: 10px 18px; font-size: 0.9rem; }
+            .setting-row { flex-wrap: wrap; }
+            .setting-row label { min-width: auto; }
+            .summary .stats { flex-wrap: wrap; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <a href="/" class="logo">Image<span>Tools</span></a>
+        <nav>
+            <a href="https://austinkc91.github.io/pdf-tools/">PDF Tools</a>
+            <a href="https://austinkc91.github.io/text-tools/">Text Tools</a>
+            <a href="https://austinkc91.github.io/qr-code-generator/">QR Generator</a>
+            <a href="https://austinkc91.github.io/">More Tools</a>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <h1>Free Online <span class="accent">Image Tools</span></h1>
+        <p>Compress, resize, and convert images directly in your browser. No upload, no sign-up required.</p>
+        <div class="privacy-badge">&#128274; Your images never leave your device</div>
+    </section>
+
+    <!-- Tool Tabs -->
+    <div class="tool-tabs">
+        <div class="tool-tab active" data-tool="compress">&#128230; Compress</div>
+        <div class="tool-tab" data-tool="resize">&#128208; Resize</div>
+        <div class="tool-tab" data-tool="convert">&#128260; Convert</div>
+    </div>
+
+    <!-- COMPRESS TOOL -->
+    <div class="tool-panel active" id="panel-compress">
+        <div class="drop-zone" id="drop-compress">
+            <div class="icon">&#128444;</div>
+            <p><strong>Drop images here</strong> or click to browse</p>
+            <p class="formats">JPEG, PNG, WebP, BMP, GIF supported</p>
+            <input type="file" id="file-compress" multiple accept="image/*" hidden>
+        </div>
+        <div class="settings">
+            <h3>Compression Settings</h3>
+            <div class="setting-row">
+                <label>Quality</label>
+                <input type="range" id="compress-quality" min="1" max="100" value="75">
+                <span class="value" id="compress-quality-val">75%</span>
+            </div>
+            <div class="setting-row">
+                <label>Output Format</label>
+                <div class="radio-group" id="compress-format">
+                    <div class="radio-btn active" data-value="auto">Auto</div>
+                    <div class="radio-btn" data-value="image/jpeg">JPEG</div>
+                    <div class="radio-btn" data-value="image/png">PNG</div>
+                    <div class="radio-btn" data-value="image/webp">WebP</div>
+                </div>
+            </div>
+            <div class="setting-row">
+                <label>Max Width</label>
+                <input type="number" id="compress-max-width" placeholder="No limit" min="1">
+                <span class="value" style="min-width:auto;font-size:0.8rem;color:var(--text-muted)">px (optional)</span>
+            </div>
+        </div>
+        <div class="file-list" id="list-compress"></div>
+        <div class="progress-bar" id="progress-compress"><div class="fill"></div></div>
+        <div class="summary" id="summary-compress">
+            <h3>Compression Complete!</h3>
+            <div class="stats">
+                <div><div class="stat-value" id="stat-files">0</div><div class="stat-label">Files</div></div>
+                <div><div class="stat-value" id="stat-before">0</div><div class="stat-label">Before</div></div>
+                <div><div class="stat-value" id="stat-after">0</div><div class="stat-label">After</div></div>
+                <div><div class="stat-value" id="stat-saved">0%</div><div class="stat-label">Saved</div></div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="btn btn-primary" id="btn-compress" disabled>Compress Images</button>
+            <button class="btn btn-secondary" id="btn-download-compress" style="display:none">Download All</button>
+            <button class="btn btn-secondary" id="btn-clear-compress" style="display:none">Clear</button>
+        </div>
+    </div>
+
+    <!-- RESIZE TOOL -->
+    <div class="tool-panel" id="panel-resize">
+        <div class="drop-zone" id="drop-resize">
+            <div class="icon">&#128208;</div>
+            <p><strong>Drop images here</strong> or click to browse</p>
+            <p class="formats">JPEG, PNG, WebP, BMP, GIF supported</p>
+            <input type="file" id="file-resize" multiple accept="image/*" hidden>
+        </div>
+        <div class="settings">
+            <h3>Resize Settings</h3>
+            <div class="setting-row">
+                <label>Mode</label>
+                <div class="radio-group" id="resize-mode">
+                    <div class="radio-btn active" data-value="dimensions">Dimensions</div>
+                    <div class="radio-btn" data-value="percentage">Percentage</div>
+                </div>
+            </div>
+            <div id="resize-dimensions">
+                <div class="setting-row">
+                    <label>Width</label>
+                    <input type="number" id="resize-width" placeholder="Auto" min="1">
+                    <span class="value" style="min-width:auto;font-size:0.8rem;color:var(--text-muted)">px</span>
+                    <label style="min-width:auto">Height</label>
+                    <input type="number" id="resize-height" placeholder="Auto" min="1">
+                    <span class="value" style="min-width:auto;font-size:0.8rem;color:var(--text-muted)">px</span>
+                </div>
+                <div class="setting-row">
+                    <label>Presets</label>
+                    <div class="presets">
+                        <div class="preset" data-w="1920" data-h="1080">1920x1080</div>
+                        <div class="preset" data-w="1280" data-h="720">1280x720</div>
+                        <div class="preset" data-w="800" data-h="600">800x600</div>
+                        <div class="preset" data-w="1200" data-h="630">Facebook</div>
+                        <div class="preset" data-w="1080" data-h="1080">Instagram</div>
+                        <div class="preset" data-w="1500" data-h="500">Twitter Header</div>
+                        <div class="preset" data-w="1000" data-h="1500">Pinterest</div>
+                        <div class="preset" data-w="2560" data-h="1440">YouTube</div>
+                    </div>
+                </div>
+            </div>
+            <div id="resize-percentage" style="display:none">
+                <div class="setting-row">
+                    <label>Scale</label>
+                    <input type="range" id="resize-scale" min="1" max="200" value="50">
+                    <span class="value" id="resize-scale-val">50%</span>
+                </div>
+            </div>
+            <div class="setting-row">
+                <label>Maintain Ratio</label>
+                <div class="radio-group" id="resize-ratio">
+                    <div class="radio-btn active" data-value="yes">Yes</div>
+                    <div class="radio-btn" data-value="no">No</div>
+                </div>
+            </div>
+            <div class="setting-row">
+                <label>Output Format</label>
+                <div class="radio-group" id="resize-format">
+                    <div class="radio-btn active" data-value="auto">Same as Input</div>
+                    <div class="radio-btn" data-value="image/jpeg">JPEG</div>
+                    <div class="radio-btn" data-value="image/png">PNG</div>
+                    <div class="radio-btn" data-value="image/webp">WebP</div>
+                </div>
+            </div>
+        </div>
+        <div class="file-list" id="list-resize"></div>
+        <div class="progress-bar" id="progress-resize"><div class="fill"></div></div>
+        <div class="actions">
+            <button class="btn btn-primary" id="btn-resize" disabled>Resize Images</button>
+            <button class="btn btn-secondary" id="btn-download-resize" style="display:none">Download All</button>
+            <button class="btn btn-secondary" id="btn-clear-resize" style="display:none">Clear</button>
+        </div>
+    </div>
+
+    <!-- CONVERT TOOL -->
+    <div class="tool-panel" id="panel-convert">
+        <div class="drop-zone" id="drop-convert">
+            <div class="icon">&#128260;</div>
+            <p><strong>Drop images here</strong> or click to browse</p>
+            <p class="formats">JPEG, PNG, WebP, BMP, GIF supported</p>
+            <input type="file" id="file-convert" multiple accept="image/*" hidden>
+        </div>
+        <div class="settings">
+            <h3>Conversion Settings</h3>
+            <div class="setting-row">
+                <label>Convert to</label>
+                <div class="radio-group" id="convert-format">
+                    <div class="radio-btn active" data-value="image/jpeg">JPEG</div>
+                    <div class="radio-btn" data-value="image/png">PNG</div>
+                    <div class="radio-btn" data-value="image/webp">WebP</div>
+                </div>
+            </div>
+            <div class="setting-row">
+                <label>Quality</label>
+                <input type="range" id="convert-quality" min="1" max="100" value="90">
+                <span class="value" id="convert-quality-val">90%</span>
+            </div>
+        </div>
+        <div class="file-list" id="list-convert"></div>
+        <div class="progress-bar" id="progress-convert"><div class="fill"></div></div>
+        <div class="actions">
+            <button class="btn btn-primary" id="btn-convert" disabled>Convert Images</button>
+            <button class="btn btn-secondary" id="btn-download-convert" style="display:none">Download All</button>
+            <button class="btn btn-secondary" id="btn-clear-convert" style="display:none">Clear</button>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="feature">
+            <div class="icon">&#128274;</div>
+            <h3>100% Private</h3>
+            <p>All processing happens in your browser. Your images never leave your device.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">&#9889;</div>
+            <h3>Lightning Fast</h3>
+            <p>No uploads, no waiting. Instant processing powered by your browser's Canvas API.</p>
+        </div>
+        <div class="feature">
+            <div class="icon">&#128178;</div>
+            <h3>Completely Free</h3>
+            <p>No sign-up, no watermarks, no limits. Process as many images as you want.</p>
+        </div>
+    </section>
+
+    <!-- SEO Content -->
+    <section style="padding: 30px 0;">
+        <h2 style="font-size:1.4rem;margin-bottom:16px;">Free Online Image Tools</h2>
+        <p style="color:var(--text-muted);margin-bottom:12px;">Image Tools provides free, browser-based image processing. Compress images to reduce file size for web and email, resize images to exact dimensions or social media presets, and convert between JPEG, PNG, and WebP formats. All processing is done locally in your browser using the Canvas API - your files are never uploaded to any server.</p>
+        <h3 style="font-size:1.1rem;margin-bottom:10px;margin-top:20px;">Why Use Image Tools?</h3>
+        <p style="color:var(--text-muted);margin-bottom:8px;">Unlike other online image tools that require sign-up or upload your files to their servers, Image Tools processes everything locally. This means faster processing, complete privacy, and no file size limits. Whether you need to compress images for your website, resize photos for social media, or convert between image formats, Image Tools has you covered.</p>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-links">
+            <a href="https://austinkc91.github.io/">ClawCraft Hub</a>
+            <a href="https://austinkc91.github.io/pdf-tools/">PDF Tools</a>
+            <a href="https://austinkc91.github.io/text-tools/">Text Tools</a>
+            <a href="https://austinkc91.github.io/qr-code-generator/">QR Generator</a>
+            <a href="https://austinkc91.github.io/email-signature-generator/">Email Signature</a>
+            <a href="https://austinkc91.github.io/quotecraft/">QuoteCraft</a>
+            <a href="https://austinkc91.github.io/invoicecraft/">InvoiceCraft</a>
+            <a href="https://austinkc91.github.io/hvac-load-calculator/">HVAC Calculator</a>
+        </div>
+        <p class="footer-copy">Image Tools by ClawCraft. Free, private, browser-based image processing.</p>
+    </div>
+</footer>
+
+<script>
+// ==================== CORE UTILITIES ====================
+function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+function getExt(mime) {
+    const map = {'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif','image/bmp':'bmp'};
+    return map[mime] || 'png';
+}
+
+function getMime(file) {
+    if (file.type && file.type.startsWith('image/')) return file.type;
+    const ext = file.name.split('.').pop().toLowerCase();
+    const map = {jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',gif:'image/gif',bmp:'image/bmp'};
+    return map[ext] || 'image/png';
+}
+
+function loadImage(file) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = URL.createObjectURL(file);
+    });
+}
+
+function canvasToBlob(canvas, mime, quality) {
+    return new Promise(resolve => {
+        canvas.toBlob(blob => resolve(blob), mime, quality);
+    });
+}
+
+function downloadBlob(blob, name) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+// ==================== TAB SWITCHING ====================
+const tabs = document.querySelectorAll('.tool-tab');
+const panels = document.querySelectorAll('.tool-panel');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tool).classList.add('active');
+    });
+});
+
+// ==================== RADIO GROUP HANDLER ====================
+document.querySelectorAll('.radio-group').forEach(group => {
+    group.querySelectorAll('.radio-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            group.querySelectorAll('.radio-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+});
+
+// ==================== RESIZE MODE TOGGLE ====================
+document.querySelectorAll('#resize-mode .radio-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const mode = btn.dataset.value;
+        document.getElementById('resize-dimensions').style.display = mode === 'dimensions' ? '' : 'none';
+        document.getElementById('resize-percentage').style.display = mode === 'percentage' ? '' : 'none';
+    });
+});
+
+// ==================== PRESETS ====================
+document.querySelectorAll('.preset').forEach(p => {
+    p.addEventListener('click', () => {
+        document.getElementById('resize-width').value = p.dataset.w;
+        document.getElementById('resize-height').value = p.dataset.h;
+    });
+});
+
+// ==================== RANGE SLIDERS ====================
+document.getElementById('compress-quality').addEventListener('input', e => {
+    document.getElementById('compress-quality-val').textContent = e.target.value + '%';
+});
+document.getElementById('resize-scale').addEventListener('input', e => {
+    document.getElementById('resize-scale-val').textContent = e.target.value + '%';
+});
+document.getElementById('convert-quality').addEventListener('input', e => {
+    document.getElementById('convert-quality-val').textContent = e.target.value + '%';
+});
+
+// ==================== FILE HANDLING ====================
+const toolState = {
+    compress: { files: [], results: [] },
+    resize: { files: [], results: [] },
+    convert: { files: [], results: [] }
+};
+
+function setupDropZone(tool) {
+    const zone = document.getElementById('drop-' + tool);
+    const input = document.getElementById('file-' + tool);
+
+    zone.addEventListener('click', () => input.click());
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('dragover'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+    zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        addFiles(tool, Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/')));
+    });
+    input.addEventListener('change', e => {
+        addFiles(tool, Array.from(e.target.files));
+        e.target.value = '';
+    });
+}
+
+async function addFiles(tool, files) {
+    const state = toolState[tool];
+    for (const file of files) {
+        const img = await loadImage(file);
+        state.files.push({ file, img, width: img.naturalWidth, height: img.naturalHeight });
+    }
+    renderFileList(tool);
+    document.getElementById('btn-' + tool).disabled = state.files.length === 0;
+}
+
+function renderFileList(tool) {
+    const list = document.getElementById('list-' + tool);
+    const state = toolState[tool];
+    list.innerHTML = state.files.map((f, i) => `
+        <div class="file-item">
+            <img class="file-thumb" src="${f.img.src}" alt="">
+            <div class="file-info">
+                <div class="file-name">${f.file.name}</div>
+                <div class="file-meta">${f.width}x${f.height} &middot; ${formatSize(f.file.size)}</div>
+            </div>
+            <button class="file-remove" onclick="removeFile('${tool}', ${i})">&times;</button>
+        </div>
+    `).join('');
+}
+
+function removeFile(tool, index) {
+    const state = toolState[tool];
+    URL.revokeObjectURL(state.files[index].img.src);
+    state.files.splice(index, 1);
+    renderFileList(tool);
+    document.getElementById('btn-' + tool).disabled = state.files.length === 0;
+}
+
+function clearTool(tool) {
+    const state = toolState[tool];
+    state.files.forEach(f => URL.revokeObjectURL(f.img.src));
+    state.files = [];
+    state.results = [];
+    renderFileList(tool);
+    document.getElementById('btn-' + tool).disabled = true;
+    document.getElementById('btn-download-' + tool).style.display = 'none';
+    document.getElementById('btn-clear-' + tool).style.display = 'none';
+    const progress = document.getElementById('progress-' + tool);
+    progress.style.display = 'none';
+    progress.querySelector('.fill').style.width = '0%';
+    const summary = document.getElementById('summary-' + tool);
+    if (summary) summary.style.display = 'none';
+}
+
+['compress', 'resize', 'convert'].forEach(tool => {
+    setupDropZone(tool);
+    document.getElementById('btn-clear-' + tool).addEventListener('click', () => clearTool(tool));
+});
+
+// ==================== COMPRESS ====================
+document.getElementById('btn-compress').addEventListener('click', async () => {
+    const state = toolState.compress;
+    if (state.files.length === 0) return;
+
+    const quality = parseInt(document.getElementById('compress-quality').value) / 100;
+    const formatEl = document.querySelector('#compress-format .radio-btn.active');
+    const format = formatEl.dataset.value;
+    const maxWidth = parseInt(document.getElementById('compress-max-width').value) || 0;
+
+    const btn = document.getElementById('btn-compress');
+    const progress = document.getElementById('progress-compress');
+    const fill = progress.querySelector('.fill');
+
+    btn.disabled = true;
+    btn.textContent = 'Compressing...';
+    progress.style.display = 'block';
+    state.results = [];
+
+    let totalBefore = 0, totalAfter = 0;
+
+    for (let i = 0; i < state.files.length; i++) {
+        const f = state.files[i];
+        const mime = format === 'auto' ? (getMime(f.file) === 'image/png' ? 'image/png' : 'image/jpeg') : format;
+
+        const canvas = document.createElement('canvas');
+        let w = f.width, h = f.height;
+        if (maxWidth > 0 && w > maxWidth) {
+            h = Math.round(h * (maxWidth / w));
+            w = maxWidth;
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(f.img, 0, 0, w, h);
+
+        const blob = await canvasToBlob(canvas, mime, quality);
+        const ext = getExt(mime);
+        const name = f.file.name.replace(/\.[^.]+$/, '') + '_compressed.' + ext;
+
+        state.results.push({ blob, name });
+        totalBefore += f.file.size;
+        totalAfter += blob.size;
+
+        fill.style.width = ((i + 1) / state.files.length * 100) + '%';
+    }
+
+    // Update UI
+    const saved = totalBefore > 0 ? Math.round((1 - totalAfter / totalBefore) * 100) : 0;
+    document.getElementById('stat-files').textContent = state.files.length;
+    document.getElementById('stat-before').textContent = formatSize(totalBefore);
+    document.getElementById('stat-after').textContent = formatSize(totalAfter);
+    document.getElementById('stat-saved').textContent = saved + '%';
+    document.getElementById('summary-compress').style.display = 'block';
+
+    btn.textContent = 'Compress Images';
+    btn.disabled = false;
+    document.getElementById('btn-download-compress').style.display = '';
+    document.getElementById('btn-clear-compress').style.display = '';
+
+    // Update file list with results
+    const list = document.getElementById('list-compress');
+    list.innerHTML = state.files.map((f, i) => {
+        const r = state.results[i];
+        const savedPct = Math.round((1 - r.blob.size / f.file.size) * 100);
+        return `
+        <div class="file-item">
+            <img class="file-thumb" src="${f.img.src}" alt="">
+            <div class="file-info">
+                <div class="file-name">${f.file.name}</div>
+                <div class="file-meta">${f.width}x${f.height} &middot; ${formatSize(f.file.size)}</div>
+            </div>
+            <div class="file-result">
+                <div class="new-size">${formatSize(r.blob.size)}</div>
+                <div class="saved">${savedPct > 0 ? '-' + savedPct + '%' : (savedPct === 0 ? 'Same' : '+' + Math.abs(savedPct) + '%')}</div>
+            </div>
+            <button class="btn-secondary" style="padding:6px 12px;font-size:0.8rem;border-radius:6px;cursor:pointer;background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="downloadSingle('compress',${i})">Save</button>
+        </div>`;
+    }).join('');
+});
+
+document.getElementById('btn-download-compress').addEventListener('click', () => {
+    toolState.compress.results.forEach(r => downloadBlob(r.blob, r.name));
+});
+
+// ==================== RESIZE ====================
+document.getElementById('btn-resize').addEventListener('click', async () => {
+    const state = toolState.resize;
+    if (state.files.length === 0) return;
+
+    const mode = document.querySelector('#resize-mode .radio-btn.active').dataset.value;
+    const maintainRatio = document.querySelector('#resize-ratio .radio-btn.active').dataset.value === 'yes';
+    const formatEl = document.querySelector('#resize-format .radio-btn.active');
+    const format = formatEl.dataset.value;
+
+    const btn = document.getElementById('btn-resize');
+    const progress = document.getElementById('progress-resize');
+    const fill = progress.querySelector('.fill');
+
+    btn.disabled = true;
+    btn.textContent = 'Resizing...';
+    progress.style.display = 'block';
+    state.results = [];
+
+    for (let i = 0; i < state.files.length; i++) {
+        const f = state.files[i];
+        let newW, newH;
+
+        if (mode === 'percentage') {
+            const scale = parseInt(document.getElementById('resize-scale').value) / 100;
+            newW = Math.round(f.width * scale);
+            newH = Math.round(f.height * scale);
+        } else {
+            const targetW = parseInt(document.getElementById('resize-width').value) || 0;
+            const targetH = parseInt(document.getElementById('resize-height').value) || 0;
+
+            if (targetW && targetH) {
+                if (maintainRatio) {
+                    const ratio = Math.min(targetW / f.width, targetH / f.height);
+                    newW = Math.round(f.width * ratio);
+                    newH = Math.round(f.height * ratio);
+                } else {
+                    newW = targetW;
+                    newH = targetH;
+                }
+            } else if (targetW) {
+                newW = targetW;
+                newH = maintainRatio ? Math.round(f.height * (targetW / f.width)) : f.height;
+            } else if (targetH) {
+                newH = targetH;
+                newW = maintainRatio ? Math.round(f.width * (targetH / f.height)) : f.width;
+            } else {
+                newW = f.width;
+                newH = f.height;
+            }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = newW;
+        canvas.height = newH;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(f.img, 0, 0, newW, newH);
+
+        const mime = format === 'auto' ? getMime(f.file) : format;
+        const blob = await canvasToBlob(canvas, mime, 0.92);
+        const ext = getExt(mime);
+        const name = f.file.name.replace(/\.[^.]+$/, '') + '_' + newW + 'x' + newH + '.' + ext;
+
+        state.results.push({ blob, name, newW, newH });
+        fill.style.width = ((i + 1) / state.files.length * 100) + '%';
+    }
+
+    btn.textContent = 'Resize Images';
+    btn.disabled = false;
+    document.getElementById('btn-download-resize').style.display = '';
+    document.getElementById('btn-clear-resize').style.display = '';
+
+    // Update list
+    const list = document.getElementById('list-resize');
+    list.innerHTML = state.files.map((f, i) => {
+        const r = state.results[i];
+        return `
+        <div class="file-item">
+            <img class="file-thumb" src="${f.img.src}" alt="">
+            <div class="file-info">
+                <div class="file-name">${f.file.name}</div>
+                <div class="file-meta">${f.width}x${f.height} &rarr; ${r.newW}x${r.newH}</div>
+            </div>
+            <div class="file-result">
+                <div class="new-size">${formatSize(r.blob.size)}</div>
+            </div>
+            <button class="btn-secondary" style="padding:6px 12px;font-size:0.8rem;border-radius:6px;cursor:pointer;background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="downloadSingle('resize',${i})">Save</button>
+        </div>`;
+    }).join('');
+});
+
+document.getElementById('btn-download-resize').addEventListener('click', () => {
+    toolState.resize.results.forEach(r => downloadBlob(r.blob, r.name));
+});
+
+// ==================== CONVERT ====================
+document.getElementById('btn-convert').addEventListener('click', async () => {
+    const state = toolState.convert;
+    if (state.files.length === 0) return;
+
+    const format = document.querySelector('#convert-format .radio-btn.active').dataset.value;
+    const quality = parseInt(document.getElementById('convert-quality').value) / 100;
+
+    const btn = document.getElementById('btn-convert');
+    const progress = document.getElementById('progress-convert');
+    const fill = progress.querySelector('.fill');
+
+    btn.disabled = true;
+    btn.textContent = 'Converting...';
+    progress.style.display = 'block';
+    state.results = [];
+
+    for (let i = 0; i < state.files.length; i++) {
+        const f = state.files[i];
+        const canvas = document.createElement('canvas');
+        canvas.width = f.width;
+        canvas.height = f.height;
+        const ctx = canvas.getContext('2d');
+
+        // White background for JPEG (no alpha)
+        if (format === 'image/jpeg') {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, f.width, f.height);
+        }
+
+        ctx.drawImage(f.img, 0, 0);
+
+        const blob = await canvasToBlob(canvas, format, quality);
+        const ext = getExt(format);
+        const name = f.file.name.replace(/\.[^.]+$/, '') + '.' + ext;
+
+        state.results.push({ blob, name, fromFormat: getMime(f.file), toFormat: format });
+        fill.style.width = ((i + 1) / state.files.length * 100) + '%';
+    }
+
+    btn.textContent = 'Convert Images';
+    btn.disabled = false;
+    document.getElementById('btn-download-convert').style.display = '';
+    document.getElementById('btn-clear-convert').style.display = '';
+
+    // Update list
+    const list = document.getElementById('list-convert');
+    list.innerHTML = state.files.map((f, i) => {
+        const r = state.results[i];
+        return `
+        <div class="file-item">
+            <img class="file-thumb" src="${f.img.src}" alt="">
+            <div class="file-info">
+                <div class="file-name">${f.file.name}</div>
+                <div class="file-meta">${getExt(r.fromFormat).toUpperCase()} &rarr; ${getExt(r.toFormat).toUpperCase()} &middot; ${formatSize(f.file.size)} &rarr; ${formatSize(r.blob.size)}</div>
+            </div>
+            <button class="btn-secondary" style="padding:6px 12px;font-size:0.8rem;border-radius:6px;cursor:pointer;background:var(--surface2);color:var(--text);border:1px solid var(--border)" onclick="downloadSingle('convert',${i})">Save</button>
+        </div>`;
+    }).join('');
+});
+
+document.getElementById('btn-download-convert').addEventListener('click', () => {
+    toolState.convert.results.forEach(r => downloadBlob(r.blob, r.name));
+});
+
+// ==================== SINGLE DOWNLOAD ====================
+function downloadSingle(tool, index) {
+    const r = toolState[tool].results[index];
+    downloadBlob(r.blob, r.name);
+}
+</script>
+
+</body>
+</html>
